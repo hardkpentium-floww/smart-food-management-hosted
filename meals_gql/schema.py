@@ -10,6 +10,12 @@ from meals_gql.item.resolvers.get_items import resolve_get_items
 from meals_gql.item.types.types import GetItemsParams, GetItemsResponse
 from meals_gql.meal.mutations.add_meal_for_user import AddMealForUser
 from meals_gql.meal.mutations.schedule_meal import ScheduleMeal
+from meals_gql.meal.resolvers.get_meal_preference import resolve_get_meal_preference
+from meals_gql.meal.resolvers.get_scheduled_meal_by_admin import resolve_get_scheduled_meal_by_admin
+from meals_gql.meal.resolvers.get_scheduled_meal_for_user import resolve_get_scheduled_meal_for_user
+from meals_gql.meal.types.types import GetScheduledMealByAdminResponse, GetScheduledMealByAdminParams, \
+    GetScheduledMealForUserResponse, GetScheduledMealForUserParams, GetMealPreferenceResponse, GetMealPreferenceParams
+from meals_gql.user.mutations.update_incampus_status import UpdateIncampusStatus
 
 
 class Query(graphene.ObjectType):
@@ -19,11 +25,28 @@ class Query(graphene.ObjectType):
         resolver=resolve_get_items
     )
 
+    get_scheduled_meal_by_admin = graphene.Field(
+        GetScheduledMealByAdminResponse,
+        params=GetScheduledMealByAdminParams(required=True),
+        resolver=resolve_get_scheduled_meal_by_admin
+    )
 
+    get_scheduled_meal_for_user = graphene.Field(
+        GetScheduledMealForUserResponse,
+        params=GetScheduledMealForUserParams(required=True),
+        resolver=resolve_get_scheduled_meal_for_user
+    )
+
+    get_meal_preference = graphene.Field(
+        GetMealPreferenceResponse,
+        params=GetMealPreferenceParams(required=True),
+        resolver=resolve_get_meal_preference
+    )
 
 class Mutation(graphene.ObjectType):
     add_meal_for_user = AddMealForUser.Field(required=True)
     schedule_meal = ScheduleMeal.Field(required=True)
+    update_incampus_status = UpdateIncampusStatus.Field(required=True)
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

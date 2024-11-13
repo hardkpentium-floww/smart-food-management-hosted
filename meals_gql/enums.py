@@ -25,3 +25,8 @@ class MealTypeEnum(graphene.Enum):
     FULL= "FULL"
     HALF= "HALF"
     CUSTOM= "CUSTOM"
+
+class MealStatusEnum(graphene.Enum):
+    ATE= "ATE"
+    SKIPPED= "SKIPPED"
+    NULL= "NULL"

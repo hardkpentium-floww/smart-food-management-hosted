@@ -16,8 +16,8 @@ class Items(graphene.ObjectType):
     items = graphene.List(Item)
 
 class GetItemsParams(graphene.InputObjectType):
-    offset = graphene.Int(required=True)
-    limit = graphene.Int(required=True)
+    offset = graphene.Int()
+    limit = graphene.Int()
 
 class ItemsNotFound(graphene.ObjectType):
     message = graphene.String()
