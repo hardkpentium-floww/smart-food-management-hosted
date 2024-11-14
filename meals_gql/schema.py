@@ -10,6 +10,7 @@ from meals_gql.item.resolvers.get_items import resolve_get_items
 from meals_gql.item.types.types import GetItemsParams, GetItemsResponse
 from meals_gql.meal.mutations.add_meal_for_user import AddMealForUser
 from meals_gql.meal.mutations.schedule_meal import ScheduleMeal
+from meals_gql.meal.mutations.update_scheduled_meal import UpdateScheduledMeal
 from meals_gql.meal.resolvers.get_meal_preference import resolve_get_meal_preference
 from meals_gql.meal.resolvers.get_scheduled_meal_by_admin import resolve_get_scheduled_meal_by_admin
 from meals_gql.meal.resolvers.get_scheduled_meal_for_user import resolve_get_scheduled_meal_for_user
@@ -47,7 +48,7 @@ class Mutation(graphene.ObjectType):
     add_meal_for_user = AddMealForUser.Field(required=True)
     schedule_meal = ScheduleMeal.Field(required=True)
     update_incampus_status = UpdateIncampusStatus.Field(required=True)
-
+    update_scheduled_meal = UpdateScheduledMeal.Field(required=True)
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
 

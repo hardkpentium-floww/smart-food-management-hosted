@@ -1,9 +1,10 @@
 import graphene
 
-from build.lib.meals.storages.storage_implementation import StorageImplementation
+
 from meals.exceptions.custom_exceptions import ItemNotFound, InvalidQuantity, InvalidDate
 from meals.interactors.schedule_meal_interactor import ScheduleMealInteractor
 from meals.interactors.storage_interfaces.storage_interface import ScheduleMealDTO
+from meals.storages.storage_implementation import StorageImplementation
 from meals_gql.meal.types.types import ScheduleMealParams, ScheduleMealResponse, ScheduleMealFailure,ScheduleMealSuccess
 
 
@@ -24,8 +25,7 @@ class ScheduleMeal(graphene.Mutation):
             full_meal_quantities=params.full_meal_quantities,
             half_meal_quantities=params.half_meal_quantities,
             date=params.date,
-            type=params.type,
-            meal_type=params.meal_type
+            meal_type=params.meal_type.value
         )
 
         try:
@@ -37,4 +37,4 @@ class ScheduleMeal(graphene.Mutation):
         except InvalidDate:
             return ScheduleMealFailure(message= "Invalid Date")
 
-        return ScheduleMealSuccess(meal_id=response.meal_id)
+        return ScheduleMealSuccess(meal_id=response)

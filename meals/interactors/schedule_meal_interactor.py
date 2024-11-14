@@ -1,10 +1,9 @@
-from build.lib.meals.storages.storage_implementation import StorageImplementation
 from meals.exceptions.custom_exceptions import ItemNotFound, InvalidQuantity, InvalidDate
-from meals.interactors.storage_interfaces.storage_interface import ScheduleMealDTO
+from meals.interactors.storage_interfaces.storage_interface import ScheduleMealDTO, StorageInterface
 
 
 class ScheduleMealInteractor:
-    def __init__(self, storage: StorageImplementation):
+    def __init__(self, storage: StorageInterface):
         self.storage = storage
 
 

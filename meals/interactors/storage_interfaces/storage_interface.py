@@ -33,8 +33,21 @@ class ScheduleMealDTO:
     full_meal_quantities: [int]
     half_meal_quantities: [int]
     date: datetime
-    type: str
     meal_type: str
+
+@dataclass
+class MealItemDTO:
+    id: str
+    name: str
+    full_meal_qty: int
+    half_meal_qty: int
+
+@dataclass
+class AdminScheduledMealDTO:
+    date: datetime
+    meal_type: str
+    items: [MealItemDTO]
+
 
 
 class StorageInterface:
@@ -44,6 +57,10 @@ class StorageInterface:
 
     @abstractmethod
     def logout(self, user_id:str, access_token:str):
+        pass
+
+    @abstractmethod
+    def check_admin(self, user_id: str):
         pass
 
     @abstractmethod
@@ -93,4 +110,8 @@ class StorageInterface:
 
     @abstractmethod
     def validate_date(self, date: datetime):
+        pass
+
+    @abstractmethod
+    def get_scheduled_meal_by_admin(self, date: datetime, meal_type:str):
         pass

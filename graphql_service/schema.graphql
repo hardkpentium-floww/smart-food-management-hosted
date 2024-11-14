@@ -27,6 +27,12 @@ enum FoodItemCategoryEnum {
   BEVERAGES
 }
 
+enum MealPreferenceEnum {
+  FULL
+  HALF
+  CUSTOM
+}
+
 enum MealStatusEnum {
   ATE
   SKIPPED
@@ -34,21 +40,15 @@ enum MealStatusEnum {
 }
 
 enum MealTypeEnum {
-  FULL
-  HALF
-  CUSTOM
+  BREAKFAST
+  LUNCH
+  DINNER
 }
 
 enum ServingSizeUnitEnum {
   PISCES
   LADDLE
   GLASS
-}
-
-enum TypeEnum {
-  BREAKFAST
-  LUNCH
-  DINNER
 }
 
 type AdminScheduledMeal {
@@ -98,9 +98,9 @@ type UpdateIncampusStatusResponse {
 }
 
 type UserMeal {
-  mealType: MealTypeEnum
+  mealType: MealPreferenceEnum
   mealId: String
-  mealPreference: MealTypeEnum
+  mealPreference: MealPreferenceEnum
   items: Item
 }
 
@@ -118,8 +118,8 @@ input AddMealForUserParams {
   itemIds: [Int]
   quantities: [Int]
   date: String
-  type: TypeEnum = null
-  mealType: MealTypeEnum = null
+  type: MealTypeEnum = null
+  mealType: MealPreferenceEnum = null
   skipMeal: MealStatusEnum = null
 }
 
@@ -131,7 +131,7 @@ input GetItemsParams {
 input GetMealPreferenceParams {
   userId: String
   mealId: String
-  mealType: MealTypeEnum = null
+  mealType: MealPreferenceEnum = null
 }
 
 input GetScheduledMealByAdminParams {
@@ -149,7 +149,6 @@ input ScheduleMealParams {
   fullMealQuantities: [Int]
   halfMealQuantities: [Int]
   date: String
-  mealPreference: TypeEnum = null
   mealType: MealTypeEnum = null
 }
 

@@ -1,6 +1,6 @@
 import graphene
 
-class TypeEnum(graphene.Enum):
+class MealTypeEnum(graphene.Enum):
     BREAKFAST = "BREAKFAST"
     LUNCH = "LUNCH"
     DINNER = "DINNER"
@@ -21,7 +21,7 @@ class ServingSizeUnitEnum(graphene.Enum):
     GLASS = "GLASS"
 
 
-class MealTypeEnum(graphene.Enum):
+class MealPreferenceEnum(graphene.Enum):
     FULL= "FULL"
     HALF= "HALF"
     CUSTOM= "CUSTOM"

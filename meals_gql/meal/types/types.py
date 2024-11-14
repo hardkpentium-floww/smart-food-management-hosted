@@ -1,13 +1,13 @@
 import graphene
 
 from graphql_service.custom_scalars import GQLDateTimeScalar
-from meals_gql.enums import TypeEnum, MealTypeEnum, MealStatusEnum
+from meals_gql.enums import MealTypeEnum, MealPreferenceEnum, MealStatusEnum
 
 
 class Meal(graphene.ObjectType):
     id = graphene.String()
     date = graphene.DateTime()
-    meal_preference = graphene.Field(TypeEnum)
+    meal_preference = graphene.Field(MealTypeEnum)
 
 
 class ScheduleMealParams(graphene.InputObjectType):
@@ -15,7 +15,6 @@ class ScheduleMealParams(graphene.InputObjectType):
     full_meal_quantities = graphene.List(graphene.Int)
     half_meal_quantities = graphene.List(graphene.Int)
     date = GQLDateTimeScalar()
-    meal_preference = graphene.Field(TypeEnum)
     meal_type = graphene.Field(MealTypeEnum)
 
 class ScheduleMealSuccess(graphene.ObjectType):
@@ -32,7 +31,7 @@ class ScheduleMealResponse(graphene.Union):
 class MealNotScheduled(graphene.ObjectType):
     message = graphene.String()
 
-class Item(graphene.ObjectType):
+class MealItem(graphene.ObjectType):
     id = graphene.String()
     name = graphene.String()
     full_meal_quantity = graphene.Int()
@@ -42,7 +41,7 @@ class Item(graphene.ObjectType):
 class AdminScheduledMeal(graphene.ObjectType):
     date = GQLDateTimeScalar()
     meal_type = graphene.Field(MealTypeEnum)
-    items = graphene.List(Item)
+    items = graphene.List(MealItem)
 
 class GetScheduledMealByAdminResponse(graphene.Union):
     class Meta:
@@ -57,10 +56,11 @@ class GetScheduledMealForUserParams(graphene.InputObjectType):
     user_id = graphene.String()
 
 class UserMeal(graphene.ObjectType):
-    meal_type = graphene.Field(MealTypeEnum)
+    meal_type = graphene.Field(MealPreferenceEnum)
     meal_id = graphene.String()
-    meal_preference = graphene.Field(MealTypeEnum)
-    items = graphene.Field(Item)
+    meal_preference = graphene.Field(MealPreferenceEnum)
+
+    items = graphene.Field(MealItem)
 
 class UserScheduledMeal(graphene.ObjectType):
     date = GQLDateTimeScalar()
@@ -74,7 +74,7 @@ class GetScheduledMealForUserResponse(graphene.Union):
 class GetMealPreferenceParams(graphene.InputObjectType):
     user_id = graphene.String()
     meal_id = graphene.String()
-    meal_type = graphene.Field(MealTypeEnum)
+    meal_type = graphene.Field(MealPreferenceEnum)
 
 class UserMealStatus(graphene.ObjectType):
     meal_status = graphene.Field(MealStatusEnum)

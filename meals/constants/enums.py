@@ -2,13 +2,13 @@ import enum
 from ib_common.constants import BaseEnumClass
 
 
-class TypeChoices(BaseEnumClass, enum.Enum):
+class MealTypeChoices(BaseEnumClass, enum.Enum):
     BREAKFAST= "BREAKFAST"
     LUNCH= "LUNCH"
     DINNER= "DINNER"
 
 
-class MealTypeChoices(BaseEnumClass, enum.Enum):
+class MealPreferenceTypeChoices(BaseEnumClass, enum.Enum):
     FULL= "FULL"
     HALF= "HALF"
     CUSTOM= "CUSTOM"
@@ -17,6 +17,7 @@ class MealTypeChoices(BaseEnumClass, enum.Enum):
 class AteMealStatusChoices(BaseEnumClass, enum.Enum):
     ATE = "ATE"
     SKIPPED = "SKIPPED"
+    NULL = "NULL"
 
 
 class FoodItemCategoryChoices(BaseEnumClass, enum.Enum):

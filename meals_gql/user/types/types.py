@@ -1,7 +1,7 @@
 import graphene
 
 from graphql_service.custom_scalars import GQLDateTimeScalar
-from meals_gql.enums import TypeEnum, MealTypeEnum, MealStatusEnum
+from meals_gql.enums import MealTypeEnum, MealPreferenceEnum, MealStatusEnum
 
 
 class AddMealForUserParams(graphene.InputObjectType):
@@ -9,8 +9,8 @@ class AddMealForUserParams(graphene.InputObjectType):
     item_ids = graphene.List(graphene.Int)
     quantities = graphene.List(graphene.Int)
     date = GQLDateTimeScalar()
-    type = graphene.Field(TypeEnum)
-    meal_type = graphene.Field(MealTypeEnum)
+    type = graphene.Field(MealTypeEnum)
+    meal_type = graphene.Field(MealPreferenceEnum)
     skip_meal = graphene.Field(MealStatusEnum)
 
 class MealAddSuccess(graphene.ObjectType):

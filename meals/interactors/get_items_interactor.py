@@ -1,9 +1,9 @@
-from build.lib.meals.storages.storage_implementation import StorageImplementation
 from meals.exceptions.custom_exceptions import NoItemsFound
+from meals.interactors.storage_interfaces.storage_interface import StorageInterface
 
 
 class GetItemsInteractor:
-    def __init__(self, storage: StorageImplementation):
+    def __init__(self, storage: StorageInterface):
         self.storage = storage
 
     def get_items(self,offset:int,limit:int):

@@ -10,3 +10,6 @@ class InvalidQuantity(Exception):
 
 class InvalidDate(Exception):
     pass
+
+class MealNotScheduledException(Exception):
+    pass
