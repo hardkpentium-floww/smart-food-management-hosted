@@ -48,6 +48,20 @@ class AdminScheduledMealDTO:
     meal_type: str
     items: [MealItemDTO]
 
+@dataclass
+class UserMealItemDTO:
+    item_id: str
+    quantity: int
+
+@dataclass
+class AddMealDTO:
+    user_id: str
+    meal_items: [UserMealItemDTO]
+    date: datetime
+    meal_type: str
+    meal_preference: str
+    meal_id: str
+    meal_status: str
 
 
 class StorageInterface:
@@ -114,4 +128,20 @@ class StorageInterface:
 
     @abstractmethod
     def get_scheduled_meal_by_admin(self, date: datetime, meal_type:str):
+        pass
+
+    @abstractmethod
+    def get_meal_status(self, meal_id:str):
+        pass
+
+    @abstractmethod
+    def save_meal_status(self, meal_id:str, meal_status:str):
+        pass
+
+    @abstractmethod
+    def get_meal_preference(self, meal_id:str, user_id:str, meal_type:str):
+        pass
+
+    @abstractmethod
+    def add_meal_for_user(self, add_meal_dto: AddMealDTO):
         pass

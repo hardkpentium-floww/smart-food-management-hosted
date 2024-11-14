@@ -76,10 +76,24 @@ class GetMealPreferenceParams(graphene.InputObjectType):
     meal_id = graphene.String()
     meal_type = graphene.Field(MealPreferenceEnum)
 
-class UserMealStatus(graphene.ObjectType):
-    meal_status = graphene.Field(MealStatusEnum)
+class UserMealPreference(graphene.ObjectType):
+    meal_preference = graphene.Field(MealPreferenceEnum)
 
 class GetMealPreferenceResponse(graphene.Union):
     class Meta:
-        types = (UserMealStatus, )
+        types = (UserMealPreference , )
 
+class MealStatus(graphene.ObjectType):
+    meal_status = graphene.Field(MealStatusEnum)
+
+class GetMealStatusResponse(graphene.Union):
+    class Meta:
+        types = (MealStatus, )
+
+class GetMealStatusParams(graphene.InputObjectType):
+    meal_id = graphene.String()
+
+
+class SaveMealStatusParams(graphene.InputObjectType):
+    meal_id = graphene.String()
+    status = graphene.Field(MealStatusEnum)

@@ -1,10 +1,15 @@
 from meals.storages.storage_implementation import StorageImplementation
+from meals_gql.meal.types.types import UserMealPreference
 
 
 def resolve_get_meal_preference(self, info,params):
 
-    # storage = StorageImplementation()
-    # interactor = GetDestinationsInteractor(storage=storage)
+    storage = StorageImplementation()
+    interactor = GetMealPreferenceInteractor(storage=storage)
+
+    meal_preference = interactor.get_meal_preference(user_id=params.user_id, meal_id=params.meal_id, meal_type=params.meal_type)
+
+    return UserMealPreference(meal_preference=meal_preference)
     #
     # get_destinations_dto = GetDestinationsDTO(
     #     tag = params.tag,

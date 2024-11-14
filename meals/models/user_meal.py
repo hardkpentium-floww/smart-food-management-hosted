@@ -10,7 +10,7 @@ class UserMeal(AbstractDateTimeModel):
     meal = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="user_meals")
     meal_type = models.CharField(max_length=250, choices=MealTypeChoices.get_list_of_tuples(), default="LUNCH")
     meal_preference = models.CharField(max_length=250, choices=MealPreferenceTypeChoices.get_list_of_tuples(), default="FULL")
-    meal_status = models.CharField(max_length=250, choices=AteMealStatusChoices.get_list_of_tuples(), default="ATE")
+    meal_status = models.CharField(max_length=250, choices=AteMealStatusChoices.get_list_of_tuples(), default="NULL")
 
 
     def __str__(self):

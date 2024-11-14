@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from meals.interactors.storage_interfaces.storage_interface import StorageInterface, AccessTokenDTO, RefreshTokenDTO, \
-    ItemDTO, ScheduleMealDTO, MealItemDTO, AdminScheduledMealDTO
+    ItemDTO, ScheduleMealDTO, MealItemDTO, AdminScheduledMealDTO, AddMealDTO
 import uuid
 
+from meals.models import UserMeal
 from meals_gql.meal.types.types import AdminScheduledMeal
 
 
@@ -255,3 +256,55 @@ class StorageImplementation(StorageInterface):
 
 
         return meal_dto
+
+    def get_meal_status(self, meal_id:str):
+        user_meal_status = UserMeal.objects.filter(meal_id=meal_id)
+
+        return user_meal_status
+
+    def save_meal_status(self, meal_id:str, meal_status:str):
+        user_meal = UserMeal.objects.get(meal_id=meal_id)
+
+        user_meal.meal_status = meal_status
+        user_meal.save()
+
+        return user_meal.meal_status
+
+
+    def get_meal_preference(self, meal_id:str, user_id:str, meal_type:str):
+        meal_preference = UserMeal.objects.get(user_id=user_id,id=meal_id, meal_type=meal_type)
+
+        return meal_preference
+
+    def add_meal_for_user(self, add_meal_dto: AddMealDTO):
+        from meals.models.user_meal import UserMeal
+        from meals.models.user_custom_meal_item import UserCustomMealItem
+        user_meal = UserMeal.objects.create(
+            id=str(uuid.uuid4()),
+            user_id=add_meal_dto.user_id,
+            meal_id=add_meal_dto.meal_id,
+            meal_type=add_meal_dto.meal_type,
+            meal_preference=add_meal_dto.meal_preference,
+            meal_status=add_meal_dto.meal_status
+        )
+
+        for i in range(len(add_meal_dto.meal_items)):
+            UserCustomMealItem.objects.create(
+                id=str(uuid.uuid4()),
+                user_meal_id=user_meal.id,
+                item_id=add_meal_dto.meal_items[i].item_id,
+                meal_qty=add_meal_dto.meal_items[i].quantity
+            )
+
+        return user_meal.id
+
+
+
+
+
+
+
+
+
+
+

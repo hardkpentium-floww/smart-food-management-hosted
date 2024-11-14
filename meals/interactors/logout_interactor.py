@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 
+from meals.interactors.storage_interfaces.storage_interface import StorageInterface
 from meals.storages.storage_implementation import StorageImplementation
 
 
 class LogoutInteractor:
 
-    def __init__(self, storage: StorageImplementation):
+    def __init__(self, storage: StorageInterface):
         self.storage = storage
 
     def logout(self, access_token:str, user_id:str):

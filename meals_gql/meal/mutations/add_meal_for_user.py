@@ -1,6 +1,9 @@
 import graphene
 
-from meals_gql.user.types.types import AddMealForUserParams, AddMealForUserResponse
+from meals.interactors.add_meal_for_user_interactor import AddMealForUserInteractor
+from meals.interactors.storage_interfaces.storage_interface import AddMealDTO, UserMealItemDTO
+from meals.storages.storage_implementation import StorageImplementation
+from meals_gql.user.types.types import AddMealForUserParams, AddMealForUserResponse, MealAddSuccess
 
 
 class AddMealForUser(graphene.Mutation):
@@ -11,9 +14,30 @@ class AddMealForUser(graphene.Mutation):
     #
     # @staticmethod
     def mutate(root, info, params):
-        pass
-    #     storage = StorageImplementation()
-    #     interactor = AddDestinationInteractor(storage=storage)
+        storage = StorageImplementation()
+        interactor = AddMealForUserInteractor(storage=storage)
+
+        meal_items = [
+            UserMealItemDTO(
+                item_id = item.item_id,
+                quantity = item.quantity
+            ) for item in params.meal_items
+        ]
+
+        add_meal_dto = AddMealDTO(
+            user_id = info.context.user_id,
+            meal_id = params.meal_id,
+            meal_type = params.meal_type,
+            meal_preference = params.meal_preference,
+            date = params.date,
+            meal_items= meal_items,
+            meal_status=params.meal_status
+        )
+
+        user_meal_id = interactor.add_meal_for_user(add_meal_dto=add_meal_dto)
+
+        return MealAddSuccess(user_meal_id = user_meal_id)
+
     #
     #     add_destination_dto = AddDestinationDTO(
     #         name = params.name,
