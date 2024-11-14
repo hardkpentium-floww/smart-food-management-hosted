@@ -25,7 +25,8 @@ ALLOWED_HOSTS = [
     "smart-food-management-gamma.apigateway.in",
     "smart-food-management-staging.apigateway.in",
     "127.0.0.1",
-    "localhost"
+    "localhost",
+    "calm-poets-hang.loca.lt"
 ]
 
 ROOT_URLCONF = 'smart_food_management.urls'
