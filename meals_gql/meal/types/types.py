@@ -58,7 +58,6 @@ class UserMeal(graphene.ObjectType):
     meal_type = graphene.Field(MealPreferenceEnum)
     meal_id = graphene.String()
     meal_preference = graphene.Field(MealPreferenceEnum)
-
     items = graphene.Field(MealItem)
 
 class UserScheduledMeal(graphene.ObjectType):

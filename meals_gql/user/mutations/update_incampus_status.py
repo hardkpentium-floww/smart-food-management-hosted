@@ -1,5 +1,6 @@
 import graphene
 
+from meals.storages.storage_implementation import StorageImplementation
 from meals_gql.user.types.types import UpdateIncampusStatusParams, UpdateIncampusStatusResponse
 
 
@@ -11,8 +12,8 @@ class UpdateIncampusStatus(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, params):
-        # storage = StorageImplementation()
-        # interactor = UpdateDestinationInteractor(storage=storage)
+        storage = StorageImplementation()
+        interactor = UpdateIncampusStatusInteractor(storage=storage)
         #
         # update_destination_dto = MutateDestinationDTO(
         #     name = params.name,
