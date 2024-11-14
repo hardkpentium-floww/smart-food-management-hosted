@@ -1,5 +1,7 @@
 import graphene
 
+from meals_gql.user.types.types import UpdateIncampusStatusParams, UpdateIncampusStatusResponse
+
 
 class UpdateIncampusStatus(graphene.Mutation):
     class Arguments:

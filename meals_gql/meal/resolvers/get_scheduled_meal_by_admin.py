@@ -1,8 +1,3 @@
-from trip.exceptions.custom_exceptions import InvalidHotel, InvalidDestination
-from trip.interactors.get_destination_interactor import GetDestinationInteractor
-from trip.storages.storage_implementation import StorageImplementation
-from trip_gql.destination.types.types import DestinationNotFound, Destination
-
 
 def resolve_get_scheduled_meal_by_admin(root, info, params):
     # storage = StorageImplementation()

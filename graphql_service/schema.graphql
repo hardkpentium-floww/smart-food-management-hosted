@@ -7,6 +7,12 @@ union AddMealForUserResponse = MealAddSuccess | MealAddFailure
 
 union GetItemsResponse = Items | ItemsNotFound
 
+union GetMealPreferenceResponse = UserMealStatus
+
+union GetScheduledMealByAdminResponse = AdminScheduledMeal | MealNotScheduled
+
+union GetScheduledMealForUserResponse = UserScheduledMeal | MealNotScheduled
+
 union ScheduleMealResponse = ScheduleMealSuccess | ScheduleMealFailure
 
 enum BaseSizeUnitEnum {
@@ -19,6 +25,12 @@ enum FoodItemCategoryEnum {
   RICE
   PANCAKE
   BEVERAGES
+}
+
+enum MealStatusEnum {
+  ATE
+  SKIPPED
+  NULL
 }
 
 enum MealTypeEnum {
@@ -37,6 +49,12 @@ enum TypeEnum {
   BREAKFAST
   LUNCH
   DINNER
+}
+
+type AdminScheduledMeal {
+  date: String
+  mealType: MealTypeEnum
+  items: [Item]
 }
 
 type Item {
@@ -63,12 +81,36 @@ type MealAddSuccess {
   userMealId: String
 }
 
+type MealNotScheduled {
+  message: String
+}
+
 type ScheduleMealFailure {
   message: String
 }
 
 type ScheduleMealSuccess {
   mealId: String
+}
+
+type UpdateIncampusStatusResponse {
+  message: String
+}
+
+type UserMeal {
+  mealType: MealTypeEnum
+  mealId: String
+  mealPreference: MealTypeEnum
+  items: Item
+}
+
+type UserMealStatus {
+  mealStatus: MealStatusEnum
+}
+
+type UserScheduledMeal {
+  date: String
+  meals: [UserMeal]
 }
 
 input AddMealForUserParams {
@@ -78,12 +120,28 @@ input AddMealForUserParams {
   date: String
   type: TypeEnum = null
   mealType: MealTypeEnum = null
-  skipMeal: Boolean
+  skipMeal: MealStatusEnum = null
 }
 
 input GetItemsParams {
-  offset: Int!
-  limit: Int!
+  offset: Int
+  limit: Int
+}
+
+input GetMealPreferenceParams {
+  userId: String
+  mealId: String
+  mealType: MealTypeEnum = null
+}
+
+input GetScheduledMealByAdminParams {
+  date: String
+  mealType: MealTypeEnum = null
+}
+
+input GetScheduledMealForUserParams {
+  date: String
+  userId: String
 }
 
 input ScheduleMealParams {
@@ -91,15 +149,24 @@ input ScheduleMealParams {
   fullMealQuantities: [Int]
   halfMealQuantities: [Int]
   date: String
-  type: TypeEnum = null
+  mealPreference: TypeEnum = null
   mealType: MealTypeEnum = null
+}
+
+input UpdateIncampusStatusParams {
+  userId: String
+  inCampus: Boolean
 }
 
 type Query {
   getItems(params: GetItemsParams!): GetItemsResponse
+  getScheduledMealByAdmin(params: GetScheduledMealByAdminParams!): GetScheduledMealByAdminResponse
+  getScheduledMealForUser(params: GetScheduledMealForUserParams!): GetScheduledMealForUserResponse
+  getMealPreference(params: GetMealPreferenceParams!): GetMealPreferenceResponse
 }
 
 type Mutation {
   addMealForUser(params: AddMealForUserParams!): AddMealForUserResponse!
   scheduleMeal(params: ScheduleMealParams!): ScheduleMealResponse!
+  updateIncampusStatus(params: UpdateIncampusStatusParams!): UpdateIncampusStatusResponse!
 }

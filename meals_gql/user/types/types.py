@@ -23,3 +23,10 @@ class MealAddFailure(graphene.ObjectType):
 class AddMealForUserResponse(graphene.Union):
     class Meta:
         types = (MealAddSuccess, MealAddFailure)
+
+class UpdateIncampusStatusParams(graphene.InputObjectType):
+    user_id = graphene.String()
+    in_campus = graphene.Boolean()
+
+class UpdateIncampusStatusResponse(graphene.ObjectType):
+    message = graphene.String()
