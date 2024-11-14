@@ -53,7 +53,6 @@ class GetScheduledMealByAdminParams(graphene.InputObjectType):
 
 class GetScheduledMealForUserParams(graphene.InputObjectType):
     date = GQLDateTimeScalar()
-    user_id = graphene.String()
 
 class UserMeal(graphene.ObjectType):
     meal_type = graphene.Field(MealPreferenceEnum)

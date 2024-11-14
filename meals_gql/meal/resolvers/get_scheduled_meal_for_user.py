@@ -1,10 +1,26 @@
 from meals.storages.storage_implementation import StorageImplementation
+from meals_gql.meal.types.types import UserScheduledMeal, UserMeal
 
 
 def resolve_get_scheduled_meal_for_user(self, info,params):
 
-    # storage = StorageImplementation()
-    # interactor = GetDestinationsInteractor(storage=storage)
+    storage = StorageImplementation()
+    # interactor = GetScheduledMealForUser(storage=storage)
+
+    # user_scheduled_meal_dto = interactor.get_scheduled_meal_for_user(user_id=info.context.user_id, date=params.date)
+    #
+    # meals_type = [
+    #     UserMeal(
+    #         meal_type=user_scheduled_meal_dto.
+    #     )
+    # ]
+    #
+    # return UserScheduledMeal(
+    #     date = params.date,
+    #     meals = meals_type
+    # )
+
+
     #
     # get_destinations_dto = GetDestinationsDTO(
     #     tag = params.tag,

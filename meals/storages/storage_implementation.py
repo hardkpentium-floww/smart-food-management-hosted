@@ -39,6 +39,7 @@ class StorageImplementation(StorageInterface):
         refresh_token = self.create_refresh_token(refresh_token_dto=refresh_token_dto)
 
         user_login_response = {
+                    "user_id": user_id,
                     "is_admin": is_admin,
                     "access_token": access_token_str,
                     "expires_in": expires,
