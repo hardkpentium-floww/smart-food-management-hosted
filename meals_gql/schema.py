@@ -48,7 +48,7 @@ class Mutation(graphene.ObjectType):
     add_meal_for_user = AddMealForUser.Field(required=True)
     schedule_meal = ScheduleMeal.Field(required=True)
     update_incampus_status = UpdateIncampusStatus.Field(required=True)
-    update_scheduled_meal = UpdateScheduledMeal.Field(required=True)
+    # update_scheduled_meal = UpdateScheduledMeal.Field(required=True)
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
 
