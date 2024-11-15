@@ -238,7 +238,7 @@ class StorageImplementation(StorageInterface):
     def get_scheduled_meal_by_admin(self, date: datetime, meal_type:str):
         from meals.models.meal import Meal
         from meals.models.meal_item import MealItem
-        meal =  Meal.objects.get(date=date, meal_type=meal_type)
+        meal =  Meal.objects.get(date__date=date.date(), meal_type=meal_type)
 
         meal_items = MealItem.objects.filter(meal_id=meal.id)
         item_dtos = [
