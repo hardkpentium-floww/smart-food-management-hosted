@@ -260,7 +260,7 @@ class StorageImplementation(StorageInterface):
         return meal_dto
 
     def get_meal_status(self, meal_id:str):
-        user_meal= UserMeal.objects.filter(meal_id=meal_id, user_id=)
+        user_meal= UserMeal.objects.filter(meal_id=meal_id)
 
         return user_meal.meal_status
 
