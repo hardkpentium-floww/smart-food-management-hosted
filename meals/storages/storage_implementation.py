@@ -303,7 +303,7 @@ class StorageImplementation(StorageInterface):
 
     def update_incampus_status(self, user_id: str, incampus_status: bool):
         from meals.models.user import User
-        User.objects.filter(id=user_id).update(incampus_status=incampus_status)
+        User.objects.filter(id=user_id).update(incampus=incampus_status)
 
         return "success"
 
