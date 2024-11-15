@@ -5,7 +5,7 @@ from meals.interactors.storage_interfaces.storage_interface import StorageInterf
 import uuid
 
 from meals.models import UserMeal
-from meals_gql.meal.types.types import AdminScheduledMeal, MealItem
+from meals_gql.meal.types.types import AdminScheduledMeal, MealItem, UserScheduledMeal
 
 
 class StorageImplementation(StorageInterface):
@@ -260,9 +260,9 @@ class StorageImplementation(StorageInterface):
         return meal_dto
 
     def get_meal_status(self, meal_id:str):
-        user_meal_status = UserMeal.objects.filter(meal_id=meal_id)
+        user_meal= UserMeal.objects.filter(meal_id=meal_id, user_id=)
 
-        return user_meal_status
+        return user_meal.meal_status
 
     def save_meal_status(self, meal_id:str, meal_status:str):
         user_meal = UserMeal.objects.get(meal_id=meal_id)
@@ -274,9 +274,9 @@ class StorageImplementation(StorageInterface):
 
 
     def get_meal_preference(self, meal_id:str, user_id:str, meal_type:str):
-        meal_preference = UserMeal.objects.get(user_id=user_id,id=meal_id, meal_type=meal_type)
+        meal = UserMeal.objects.filter(user_id=user_id,meal_id=meal_id, meal_type=meal_type.value).first()
 
-        return meal_preference
+        return meal.meal_preference
 
     def add_meal_for_user(self, add_meal_dto: AddMealDTO):
         from meals.models.user_meal import UserMeal
@@ -321,31 +321,32 @@ class StorageImplementation(StorageInterface):
         meals = Meal.objects.filter(date__date=date.date())
 
         for meal in meals:
-            user_meal = UserMealModel.objects.get(meal_id=meal.id, meal__date__date=date.date())
-            meal_items = UserCustomMealItem.objects.filter(user_meal_id=user_meal.id)
+            user_meals = UserMealModel.objects.filter(meal_id=meal.id, meal__date__date=date.date())
+            for user_meal in user_meals:
+                meal_items = UserCustomMealItem.objects.filter(user_meal_id=user_meal.id)
 
-            items = []
-            for meal_item in meal_items:
-                item = MealItemModel.objects.get(id=meal_item.id)
-                items.append(MealItem(
-                    id=meal_item.id,
-                    name=meal_item.name,
-                    full_meal_quantity=item.full_meal_qty,
-                    half_meal_quantity=item.half_meal_qty,
-                    custom_meal_quantity=meal_item.meal_qty
-                ))
+                items = []
+                for meal_item in meal_items:
+                    item = MealItemModel.objects.get(item_id=meal_item.item.id)
+                    items.append(MealItem(
+                        id=meal_item.item.id,
+                        name=item.item.name,
+                        full_meal_quantity=item.full_meal_qty,
+                        half_meal_quantity=item.half_meal_qty,
+                        custom_meal_quantity=meal_item.meal_qty
+                    ))
 
-            user_meals = [
-                UserMeal(
-                    meal_type=meal.meal_type,
-                    meal_id=meal.id,
-                    meal_preference=user_meal.meal_preference,
-                    items=items
-                )
-            ]
+                user_meals = [
+                    UserMeal(
+                        meal_type=meal.meal_type,
+                        meal_id=meal.id,
+                        meal_preference=user_meal.meal_preference,
+                        items=items
+                    )
+                ]
 
 
-        return AdminScheduledMeal(
+        return UserScheduledMeal(
             date=date,
             meals=user_meals
         )

@@ -1,3 +1,4 @@
+from meals.interactors.get_meal_preference_interactor import GetMealPreferenceInteractor
 from meals.storages.storage_implementation import StorageImplementation
 from meals_gql.meal.types.types import UserMealPreference
 

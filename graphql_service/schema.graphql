@@ -116,7 +116,7 @@ type ScheduleMealSuccess {
 }
 
 type UserMeal {
-  mealType: MealPreferenceEnum
+  mealType: MealTypeEnum
   mealId: String
   mealPreference: MealPreferenceEnum
   items: [MealItem]
@@ -148,7 +148,7 @@ input GetItemsParams {
 input GetMealPreferenceParams {
   userId: String
   mealId: String
-  mealType: MealPreferenceEnum = null
+  mealType: MealTypeEnum = null
 }
 
 input GetMealStatusParams {
