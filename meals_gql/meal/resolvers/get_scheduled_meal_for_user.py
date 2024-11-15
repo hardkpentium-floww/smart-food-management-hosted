@@ -1,3 +1,4 @@
+from meals.interactors.get_scheduled_meal_for_user import GetScheduledMealForUserInteractor
 from meals.storages.storage_implementation import StorageImplementation
 from meals_gql.meal.types.types import UserScheduledMeal, UserMeal
 
@@ -5,7 +6,11 @@ from meals_gql.meal.types.types import UserScheduledMeal, UserMeal
 def resolve_get_scheduled_meal_for_user(self, info,params):
 
     storage = StorageImplementation()
-    # interactor = GetScheduledMealForUser(storage=storage)
+    interactor = GetScheduledMealForUserInteractor(storage=storage)
+
+    response = interactor.get_scheduled_meal_for_user(user_id=info.context.user_id,date=params.date)
+
+    return response
 
     # user_scheduled_meal_dto = interactor.get_scheduled_meal_for_user(user_id=info.context.user_id, date=params.date)
     #

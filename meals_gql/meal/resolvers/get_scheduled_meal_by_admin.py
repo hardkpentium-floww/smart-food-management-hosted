@@ -27,6 +27,7 @@ def resolve_get_scheduled_meal_by_admin(root, info, params):
     return AdminScheduledMeal(
             date = scheduled_meal_dto.date,
             meal_type = scheduled_meal_dto.meal_type,
-            items = items_type
+            items = items_type,
+            meal_id = scheduled_meal_dto.meal_id
         )
 

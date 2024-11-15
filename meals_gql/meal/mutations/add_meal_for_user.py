@@ -12,7 +12,7 @@ class AddMealForUser(graphene.Mutation):
 
     Output = AddMealForUserResponse
     #
-    # @staticmethod
+    @staticmethod
     def mutate(root, info, params):
         storage = StorageImplementation()
         interactor = AddMealForUserInteractor(storage=storage)
@@ -27,11 +27,11 @@ class AddMealForUser(graphene.Mutation):
         add_meal_dto = AddMealDTO(
             user_id = info.context.user_id,
             meal_id = params.meal_id,
-            meal_type = params.meal_type,
-            meal_preference = params.meal_preference,
+            meal_type = params.meal_type.value,
+            meal_preference = params.meal_preference.value,
             date = params.date,
             meal_items= meal_items,
-            meal_status=params.meal_status
+            meal_status=params.meal_status.value
         )
 
         user_meal_id = interactor.add_meal_for_user(add_meal_dto=add_meal_dto)

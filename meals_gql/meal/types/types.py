@@ -36,12 +36,13 @@ class MealItem(graphene.ObjectType):
     name = graphene.String()
     full_meal_quantity = graphene.Int()
     half_meal_quantity = graphene.Int()
-
+    custom_meal_quantity = graphene.Int()
 
 class AdminScheduledMeal(graphene.ObjectType):
     date = GQLDateTimeScalar()
     meal_type = graphene.Field(MealTypeEnum)
     items = graphene.List(MealItem)
+    meal_id = graphene.String()
 
 class GetScheduledMealByAdminResponse(graphene.Union):
     class Meta:
@@ -58,7 +59,7 @@ class UserMeal(graphene.ObjectType):
     meal_type = graphene.Field(MealPreferenceEnum)
     meal_id = graphene.String()
     meal_preference = graphene.Field(MealPreferenceEnum)
-    items = graphene.Field(MealItem)
+    items = graphene.List(MealItem)
 
 class UserScheduledMeal(graphene.ObjectType):
     date = GQLDateTimeScalar()

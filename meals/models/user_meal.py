@@ -14,4 +14,4 @@ class UserMeal(AbstractDateTimeModel):
 
 
     def __str__(self):
-        return
+        return self.id

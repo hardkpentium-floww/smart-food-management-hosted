@@ -25,6 +25,7 @@ class MealPreferenceEnum(graphene.Enum):
     FULL= "FULL"
     HALF= "HALF"
     CUSTOM= "CUSTOM"
+    SKIPPED = "SKIPPED"
 
 class MealStatusEnum(graphene.Enum):
     ATE= "ATE"

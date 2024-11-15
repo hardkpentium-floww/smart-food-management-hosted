@@ -5,7 +5,7 @@ from meals.interactors.storage_interfaces.storage_interface import StorageInterf
 import uuid
 
 from meals.models import UserMeal
-from meals_gql.meal.types.types import AdminScheduledMeal
+from meals_gql.meal.types.types import AdminScheduledMeal, MealItem
 
 
 class StorageImplementation(StorageInterface):
@@ -243,7 +243,7 @@ class StorageImplementation(StorageInterface):
         meal_items = MealItem.objects.filter(meal_id=meal.id)
         item_dtos = [
             MealItemDTO(
-                id = meal_item.id,
+                id = meal_item.item.id,
                 name = meal_item.item.name,
                 full_meal_qty = meal_item.full_meal_qty,
                 half_meal_qty = meal_item.half_meal_qty
@@ -252,7 +252,8 @@ class StorageImplementation(StorageInterface):
         meal_dto = AdminScheduledMealDTO(
                 date = date,
                 meal_type = meal_type,
-                items = item_dtos
+                items = item_dtos,
+                meal_id = meal.id
             )
 
 
@@ -289,6 +290,7 @@ class StorageImplementation(StorageInterface):
             meal_status=add_meal_dto.meal_status
         )
 
+
         for i in range(len(add_meal_dto.meal_items)):
             UserCustomMealItem.objects.create(
                 id=str(uuid.uuid4()),
@@ -299,6 +301,54 @@ class StorageImplementation(StorageInterface):
 
         return user_meal.id
 
+    def update_incampus_status(self, user_id: str, incampus_status: bool):
+        from meals.models.user import User
+        User.objects.filter(id=user_id).update(incampus_status=incampus_status)
+
+        return "success"
+
+    # def get_meals_for_date(self, date:datetime):
+    #     from meals.models.meal import Meal
+    #     meals = Meal.objects.filter(date__date=date.date())
+
+    def get_scheduled_meal_for_user(self, user_id:str, date:datetime):
+        from meals.models.user_meal import UserMeal as UserMealModel
+        from meals.models.meal import Meal
+        from meals.models.user_custom_meal_item import UserCustomMealItem
+        from meals.models.meal_item import MealItem as MealItemModel
+        from meals_gql.meal.types.types import UserMeal
+
+        meals = Meal.objects.filter(date__date=date.date())
+
+        for meal in meals:
+            user_meal = UserMealModel.objects.get(meal_id=meal.id, meal__date__date=date.date())
+            meal_items = UserCustomMealItem.objects.filter(user_meal_id=user_meal.id)
+
+            items = []
+            for meal_item in meal_items:
+                item = MealItemModel.objects.get(id=meal_item.id)
+                items.append(MealItem(
+                    id=meal_item.id,
+                    name=meal_item.name,
+                    full_meal_quantity=item.full_meal_qty,
+                    half_meal_quantity=item.half_meal_qty,
+                    custom_meal_quantity=meal_item.meal_qty
+                ))
+
+            user_meals = [
+                UserMeal(
+                    meal_type=meal.meal_type,
+                    meal_id=meal.id,
+                    meal_preference=user_meal.meal_preference,
+                    items=items
+                )
+            ]
+
+
+        return AdminScheduledMeal(
+            date=date,
+            meals=user_meals
+        )
 
 
 

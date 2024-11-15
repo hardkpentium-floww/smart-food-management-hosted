@@ -47,6 +47,7 @@ class AdminScheduledMealDTO:
     date: datetime
     meal_type: str
     items: [MealItemDTO]
+    meal_id: str
 
 @dataclass
 class UserMealItemDTO:
@@ -144,4 +145,13 @@ class StorageInterface:
 
     @abstractmethod
     def add_meal_for_user(self, add_meal_dto: AddMealDTO):
+        pass
+
+    @abstractmethod
+    def update_incampus_status(self, user_id: str, incampus_status: bool):
+        pass
+
+
+    @abstractmethod
+    def get_scheduled_meal_for_user(self, user_id:str, date:datetime):
         pass

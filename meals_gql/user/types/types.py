@@ -14,6 +14,8 @@ class AddMealForUserParams(graphene.InputObjectType):
     meal_type = graphene.Field(MealTypeEnum)
     meal_status = graphene.Field(MealStatusEnum)
     meal_preference = graphene.Field(MealPreferenceEnum)
+    meal_id = graphene.String()
+
 
 class MealAddSuccess(graphene.ObjectType):
     user_meal_id = graphene.String()
@@ -30,5 +32,9 @@ class UpdateIncampusStatusParams(graphene.InputObjectType):
     user_id = graphene.String()
     in_campus = graphene.Boolean()
 
-class UpdateIncampusStatusResponse(graphene.ObjectType):
+class IncampusStatusUpdateSuccess(graphene.ObjectType):
     message = graphene.String()
+
+class UpdateIncampusStatusResponse(graphene.Union):
+    class Meta:
+        types = (IncampusStatusUpdateSuccess,)
