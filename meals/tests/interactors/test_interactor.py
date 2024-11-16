@@ -154,3 +154,45 @@ class TestInteractor:
         assert logout_response["status_code"] == expected_logout_response["status_code"]
         assert logout_response["res_status"] == expected_logout_response["res_status"]
         assert logout_response["response"]["message"] == expected_logout_response["response"]["message"]
+
+
+    def test_get_items(self, storage):
+        pass
+
+    def test_get_items_with_no_items(self, storage):
+        pass
+
+    def test_add_meal_for_user(self, storage):
+        pass
+
+    def test_save_meal_for_user(self,storage):
+        pass
+
+    def test_schedule_meal(self, storage):
+        pass
+
+    def test_update_scheduled_meal(self, storage):
+        pass
+
+    def test_get_meal_preference(self, storage):
+        pass
+
+    def test_get_meal_status(self, storage):
+        pass
+
+    def test_get_scheduled_meal_by_admin(self, storage):
+        pass
+
+    def test_get_scheduled_meal_by_admin_with_no_meals(self, storage):
+        pass
+
+
+    def test_get_scheduled_meal_for_user(self, storage):
+        pass
+
+    def test_get_scheduled_meal_for_user_with_no_user_meals(self, storage):
+        pass
+
+    def test_update_incampus_status(self, storage):
+        pass
+

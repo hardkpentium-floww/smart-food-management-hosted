@@ -1,10 +1,14 @@
 from datetime import datetime
 
+from meals.constants.enums import MealTypeChoices, AteMealStatusChoices, MealPreferenceTypeChoices
+from meals.exceptions.custom_exceptions import UserMealDoesNotExist, InvalidMealType, InvalidMealStatus, \
+    InvalidMealPreference, ItemNotFound, InvalidQuantity
 from meals.interactors.storage_interfaces.storage_interface import StorageInterface, AccessTokenDTO, RefreshTokenDTO, \
     ItemDTO, ScheduleMealDTO, MealItemDTO, AdminScheduledMealDTO, AddMealDTO
 import uuid
 
 from meals.models import UserMeal
+from meals_gql.enums import MealTypeEnum
 from meals_gql.meal.types.types import AdminScheduledMeal, MealItem, UserScheduledMeal
 
 
@@ -61,6 +65,13 @@ class StorageImplementation(StorageInterface):
         from meals.models.user import User
         check = User.objects.get(id=user_id).is_admin
         return check
+
+    def validate_user(self, user_id: str):
+        from meals.models.user import User
+        check
+
+    def validate_meal(self, meal_id: str):
+        pass
 
     def get_application_id(self, application_name: str):
         from oauth2_provider.models import Application
@@ -216,14 +227,14 @@ class StorageImplementation(StorageInterface):
         for i in range(len(item_ids)):
             check = Item.objects.filter(id=item_ids[i]).exists()
             if not check:
-                return False
+                return item_ids[i]
 
         return True
 
 
-    def validate_quantities(self, full_meal_quantities:[int], half_meal_quantities:[int]):
-        for i in range(len(full_meal_quantities)):
-            if full_meal_quantities[i] < 0 or half_meal_quantities[i] < 0:
+    def validate_quantities(self, quantities:[int]):
+        for i in range(len(quantities)):
+            if quantities[i] < 0:
                 return False
 
         return True
@@ -278,9 +289,30 @@ class StorageImplementation(StorageInterface):
 
         return meal.meal_preference
 
+    def check_meal_type(self, meal_type:str):
+        if meal_type in MealTypeChoices.get_list_of_values():
+            return True
+
+        return False
+
+    def check_meal_status(self, meal_status:str):
+        if meal_status in AteMealStatusChoices.get_list_of_values():
+            return True
+
+        return False
+
+    def check_meal_preference(self, meal_preference:str):
+        if meal_preference in MealPreferenceTypeChoices.get_list_of_values():
+            return True
+
+        return False
+
     def add_meal_for_user(self, add_meal_dto: AddMealDTO):
         from meals.models.user_meal import UserMeal
         from meals.models.user_custom_meal_item import UserCustomMealItem
+
+
+
         user_meal = UserMeal.objects.create(
             id=str(uuid.uuid4()),
             user_id=add_meal_dto.user_id,
@@ -322,6 +354,10 @@ class StorageImplementation(StorageInterface):
 
         for meal in meals:
             user_meals = UserMealModel.objects.filter(meal_id=meal.id, meal__date__date=date.date())
+
+            if not user_meals.exists():
+                raise UserMealDoesNotExist
+
             for user_meal in user_meals:
                 meal_items = UserCustomMealItem.objects.filter(user_meal_id=user_meal.id)
 

@@ -12,6 +12,7 @@ class MealPreferenceTypeChoices(BaseEnumClass, enum.Enum):
     FULL= "FULL"
     HALF= "HALF"
     CUSTOM= "CUSTOM"
+    SKIPPED = "SKIPPED"
 
 
 class AteMealStatusChoices(BaseEnumClass, enum.Enum):

@@ -1,9 +1,12 @@
 import graphene
+from google.auth import message
 
+from meals.exceptions.custom_exceptions import InvalidUser, InvalidMeal, InvalidMealType, InvalidMealPreference, \
+    InvalidMealStatus, ItemNotFound
 from meals.interactors.add_meal_for_user_interactor import AddMealForUserInteractor
 from meals.interactors.storage_interfaces.storage_interface import AddMealDTO, UserMealItemDTO
 from meals.storages.storage_implementation import StorageImplementation
-from meals_gql.user.types.types import AddMealForUserParams, AddMealForUserResponse, MealAddSuccess
+from meals_gql.user.types.types import AddMealForUserParams, AddMealForUserResponse, MealAddSuccess, MealAddFailure
 
 
 class AddMealForUser(graphene.Mutation):
@@ -34,7 +37,22 @@ class AddMealForUser(graphene.Mutation):
             meal_status=params.meal_status.value
         )
 
-        user_meal_id = interactor.add_meal_for_user(add_meal_dto=add_meal_dto)
+        try:
+            user_meal_id = interactor.add_meal_for_user(add_meal_dto=add_meal_dto)
+        except InvalidUser:
+            return MealAddFailure(message= "Invalid User")
+        except InvalidMeal:
+            return MealAddFailure(message= "Invalid Meal ID")
+        except InvalidMealType:
+            return MealAddFailure(message= "Invalid Meal Type")
+        except InvalidMealPreference:
+            return MealAddFailure(message= "Invalid Meal Preference")
+        except InvalidMealStatus:
+            return MealAddFailure(message= "Invalid Meal Status")
+        except ItemNotFound as e:
+            return MealAddFailure(message= f"Invalid Item ID: {e.item_id}")
+        except
+
 
         return MealAddSuccess(user_meal_id = user_meal_id)
 

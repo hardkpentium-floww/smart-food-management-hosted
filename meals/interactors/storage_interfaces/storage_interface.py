@@ -79,6 +79,14 @@ class StorageInterface:
         pass
 
     @abstractmethod
+    def validate_user(self, user_id: str):
+        pass
+
+    @abstractmethod
+    def validate_meal(self, meal_id: str):
+        pass
+
+    @abstractmethod
     def get_application_id(self, application_name: str):
         pass
 
@@ -120,7 +128,7 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def validate_quantities(self, full_meal_quantities:[int], half_meal_quantities:[int]):
+    def validate_quantities(self, quantities:[int]):
         pass
 
     @abstractmethod
@@ -141,6 +149,18 @@ class StorageInterface:
 
     @abstractmethod
     def get_meal_preference(self, meal_id:str, user_id:str, meal_type:str):
+        pass
+
+    @abstractmethod
+    def check_meal_type(self, meal_type:str):
+        pass
+
+    @abstractmethod
+    def check_meal_status(self, meal_status:str):
+        pass
+
+    @abstractmethod
+    def check_meal_preference(self, meal_preference:str):
         pass
 
     @abstractmethod
