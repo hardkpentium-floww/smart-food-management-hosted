@@ -26,7 +26,7 @@ ALLOWED_HOSTS = [
     "smart-food-management-staging.apigateway.in",
     "127.0.0.1",
     "localhost",
-    "heavy-suits-beam.loca.lt"
+    "fluffy-baths-cough.loca.lt"
 ]
 
 ROOT_URLCONF = 'smart_food_management.urls'
