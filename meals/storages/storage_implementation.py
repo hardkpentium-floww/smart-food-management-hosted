@@ -170,26 +170,6 @@ class StorageImplementation(StorageInterface):
                             full_meal_qty=schedule_meal_dto.full_meal_quantities[schedule_meal_dto.item_ids.index(item_id)],
                             half_meal_qty=schedule_meal_dto.half_meal_quantities[schedule_meal_dto.item_ids.index(item_id)]
                         )
-
-            # items = {
-            #     item.id: {
-            #         "full_meal_qty": item.full_meal_qty,
-            #         "half_meal_qty": item.half_meal_qty
-            #     } for item in meal_items
-            # }
-            #
-            # for item_id in schedule_meal_dto.item_ids:
-            #     if item_id in items:
-            #         items[item_id]["full_meal_qty"] = schedule_meal_dto.full_meal_quantities[schedule_meal_dto.item_ids.index(item_id)]
-            #         items[item_id]["half_meal_qty"] = schedule_meal_dto.half_meal_quantities[schedule_meal_dto.item_ids.index(item_id)]
-            #     else:
-            #         MealItem.objects.create(
-            #             id=str(uuid.uuid4()),
-            #             meal_id=meal.id,
-            #             item_id=item_id,
-            #             full_meal_qty=schedule_meal_dto.full_meal_quantities[schedule_meal_dto.item_ids.index(item_id)],
-            #             half_meal_qty=schedule_meal_dto.half_meal_quantities[schedule_meal_dto.item_ids.index(item_id)]
-            #         )
         else:
             meal = Meal.objects.create(
                 id=str(uuid.uuid4()),

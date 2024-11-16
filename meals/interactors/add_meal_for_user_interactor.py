@@ -31,7 +31,7 @@ class AddMealForUserInteractor:
 
         check = self.storage.validate_item_ids(item_ids=[item.item_id for item in add_meal_dto.meal_items])
         if check != True:
-            raise ItemNotFound(item_id=check)
+            raise ItemNotFound(check)
 
         check = self.storage.validate_quantities(quantities=[meal_item.quantity for meal_item in add_meal_dto.meal_items])
         if not check:

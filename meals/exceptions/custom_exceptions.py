@@ -2,8 +2,9 @@
 class NoItemsFound(Exception):
     pass
 
-class ItemNotFound(Exception, ValueError):
-    pass
+class ItemNotFound(Exception):
+    def __init__(self, item_id: str):
+        self.item_id = item_id
 
 class InvalidQuantity(Exception):
     pass

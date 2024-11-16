@@ -165,6 +165,27 @@ class TestInteractor:
     def test_add_meal_for_user(self, storage):
         pass
 
+    def test_add_meal_for_user_with_invalid_user(self, storage):
+        pass
+
+    def test_add_meal_for_user_with_invalid_meal(self, storage):
+        pass
+
+    def test_add_meal_for_user_with_invalid_meal_type(self, storage):
+        pass
+
+    def test_add_meal_for_user_with_invalid_meal_status(self, storage):
+        pass
+
+    def test_add_meal_for_user_with_invalid_meal_preference(self, storage):
+        pass
+
+    def test_add_meal_for_user_with_invalid_item_id(self, storage):
+        pass
+
+    def test_add_meal_for_user_with_invalid_item_quantity(self, storage):
+        pass
+
     def test_save_meal_for_user(self,storage):
         pass
 
