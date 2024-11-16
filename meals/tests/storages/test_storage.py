@@ -66,15 +66,75 @@ class TestStorageImplementation:
 
     def test_revoke_refresh_token(self, storage):
         user = UserAccountFactory()
-
-        access_token = AccessTokenFactory(user_id=user.user_id, )
         application = ApplicationFactory()
-        # refresh_token = RefreshTokenFactory(access_token_id=access_token.id, application_id=application.id, user_id=)
+        access_token = AccessTokenFactory(user_id=user.user_id, application_id=application.id)
+        refresh_token = RefreshTokenFactory(access_token_id=access_token.id, application_id=application.id, user_id=user.user_id)
 
+        refresh_token  = storage.revoke_refresh_token(refresh_token_id=refresh_token.id)
 
+        assert refresh_token.revoked.date() == datetime.now().date()
 
-
-
+    # def get_items(self, offset: int, limit: int):
+    #     pass
+    #
+    # def get_user_acc(self, user_id: str):
+    #     pass
+    #
+    # def get_user(self, username: str):
+    #     pass
+    #
+    # def create_access_token(self, access_token_dto: AccessTokenDTO):
+    #     pass
+    #
+    # def schedule_meal(self, schedule_meal_dto: ScheduleMealDTO):
+    #     pass
+    #
+    # def create_refresh_token(self, refresh_token_dto: RefreshTokenDTO):
+    #     pass
+    #
+    # def validate_item_ids(self, item_ids: [int]):
+    #     pass
+    #
+    # def validate_quantities(self, quantities: [int]):
+    #     pass
+    #
+    # def validate_date(self, date: datetime):
+    #     pass
+    #
+    # def get_scheduled_meal_by_admin(self, date: datetime, meal_type: str):
+    #     pass
+    #
+    # def get_meal_status(self, meal_id: str):
+    #     pass
+    #
+    # def save_meal_status(self, meal_id: str, meal_status: str):
+    #     pass
+    #
+    # def get_meal_preference(self, meal_id: str, user_id: str, meal_type: str):
+    #     pass
+    #
+    # def check_meal_type(self, meal_type: str):
+    #     pass
+    #
+    # def check_meal_status(self, meal_status: str):
+    #     pass
+    #
+    # def check_meal_preference(self, meal_preference: str):
+    #     pass
+    #
+    # def add_meal_for_user(self, add_meal_dto: AddMealDTO):
+    #     pass
+    #
+    # def update_incampus_status(self, user_id: str, incampus_status: bool):
+    #     pass
+    #
+    # def get_scheduled_meal_for_user(self, user_id: str, date: datetime):
+    #     pass
+    #
+    #
+    #
+    #
+    #
 
 
 

@@ -68,10 +68,14 @@ class StorageImplementation(StorageInterface):
 
     def validate_user(self, user_id: str):
         from meals.models.user import User
-        check
+        check = User.objects.filter(id=user_id).exists()
+        return check
 
     def validate_meal(self, meal_id: str):
-        pass
+        from meals.models.meal import Meal
+        check = Meal.objects.filter(id=meal_id)
+
+        return check
 
     def get_application_id(self, application_name: str):
         from oauth2_provider.models import Application
