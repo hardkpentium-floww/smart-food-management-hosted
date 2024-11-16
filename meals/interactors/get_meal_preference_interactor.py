@@ -11,8 +11,8 @@ class GetMealPreferenceInteractor:
 
     def get_meal_preference(self, user_id:str, meal_id:str, meal_type:str):
 
-        meal_status= self.storage.get_meal_preference( user_id=user_id, meal_id=meal_id, meal_type=meal_type)
+        meal_preference= self.storage.get_meal_preference( user_id=user_id, meal_id=meal_id, meal_type=meal_type)
 
-        return meal_status
+        return meal_preference
 
 

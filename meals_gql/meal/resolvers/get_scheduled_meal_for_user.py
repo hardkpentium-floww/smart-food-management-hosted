@@ -1,5 +1,5 @@
 from meals.exceptions.custom_exceptions import UserMealDoesNotExist
-from meals.interactors.get_scheduled_meal_for_user import GetScheduledMealForUserInteractor
+from meals.interactors.get_scheduled_meal_for_user_interactor import GetScheduledMealForUserInteractor
 from meals.storages.storage_implementation import StorageImplementation
 from meals_gql.meal.types.types import UserScheduledMeal, UserMeal, MealNotScheduled
 

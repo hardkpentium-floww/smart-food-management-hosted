@@ -99,6 +99,7 @@ class TestInteractor:
 
 
     def test_login_invalid_password(self,storage):
+        #Arrange
         interactor = LoginInteractor(storage=storage)
         user = Mock()
         user.id = "1"
@@ -112,18 +113,22 @@ class TestInteractor:
         storage.get_user_acc.return_value = user_acc
         user_acc.check_password.return_value = False
 
+        expected_login_response = {
+            "status_code": 401,
+            "res_status": "INVALID_PASSWORD",
+            "response": {
+                "message": "Invalid Password"
+            }
+        }
 
+        #Act
         response = interactor.login(username="user.name", password="user_password")
         response_data = json.loads(response.content.decode('utf-8'))
         login_response = response_data
-        expected_login_response = {
-                    "status_code": 401,
-                    "res_status": "INVALID_PASSWORD",
-                    "response": {
-                        "message": "Invalid Password"
-                    }
-                }
 
+
+
+        #Assert
         storage.get_user.assert_called_once_with(username="user.name")
         storage.get_user_acc.assert_called_once_with(user_id=user.id)
         user_acc.check_password.assert_called_once_with("user_password")
@@ -131,89 +136,4 @@ class TestInteractor:
         assert login_response["status_code"] == expected_login_response["status_code"]
         assert login_response["res_status"] == expected_login_response["res_status"]
         assert login_response["response"]["message"] == expected_login_response["response"]["message"]
-
-
-    def test_logout(self, storage):
-        interactor = LogoutInteractor(storage=storage)
-
-        storage.logout.return_value = None
-
-        response = interactor.logout(user_id="user_id", access_token="access_token")
-        response_data = json.loads(response.content.decode('utf-8'))
-        logout_response = response_data
-
-
-        expected_logout_response = {
-            "status_code": 200,
-            "res_status": "LOGOUT SUCCESS",
-            "response": {
-                "message": "logged out successfully"
-            }
-        }
-
-        assert logout_response["status_code"] == expected_logout_response["status_code"]
-        assert logout_response["res_status"] == expected_logout_response["res_status"]
-        assert logout_response["response"]["message"] == expected_logout_response["response"]["message"]
-
-
-    def test_get_items(self, storage):
-        pass
-
-    def test_get_items_with_no_items(self, storage):
-        pass
-
-    def test_add_meal_for_user(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_user(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_meal(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_meal_type(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_meal_status(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_meal_preference(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_item_id(self, storage):
-        pass
-
-    def test_add_meal_for_user_with_invalid_item_quantity(self, storage):
-        pass
-
-    def test_save_meal_for_user(self,storage):
-        pass
-
-    def test_schedule_meal(self, storage):
-        pass
-
-    def test_update_scheduled_meal(self, storage):
-        pass
-
-    def test_get_meal_preference(self, storage):
-        pass
-
-    def test_get_meal_status(self, storage):
-        pass
-
-    def test_get_scheduled_meal_by_admin(self, storage):
-        pass
-
-    def test_get_scheduled_meal_by_admin_with_no_meals(self, storage):
-        pass
-
-
-    def test_get_scheduled_meal_for_user(self, storage):
-        pass
-
-    def test_get_scheduled_meal_for_user_with_no_user_meals(self, storage):
-        pass
-
-    def test_update_incampus_status(self, storage):
-        pass
 

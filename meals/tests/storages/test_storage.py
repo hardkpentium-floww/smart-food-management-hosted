@@ -2,16 +2,12 @@ from datetime import datetime, timedelta
 from unittest.mock import patch
 
 import pytest
-from debugpy.adapter import access_token
-from ib_users.models import UserAccount
-from oauth2_provider.admin import RefreshToken
 
-from graphql_service.context import AccessToken
 from meals.storages.storage_implementation import StorageImplementation
 from meals.tests.factories.models import ApplicationFactory, UserFactory, UserAccountFactory, AccessTokenFactory, \
     RefreshTokenFactory
 from meals.tests.factories.storage_dtos import AccessTokenDTOFactory, RefreshTokenDTOFactory
-from smart_food_management.wsgi import application
+
 
 
 @pytest.mark.django_db

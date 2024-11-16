@@ -1,5 +1,5 @@
 from meals.exceptions.custom_exceptions import MealNotScheduledException
-from meals.interactors.get_scheduled_meal_by_admin import GetScheduledMealByAdminInteractor
+from meals.interactors.get_scheduled_meal_by_admin_interactor import GetScheduledMealByAdminInteractor
 from meals.storages.storage_implementation import StorageImplementation
 from meals_gql.meal.types.types import MealNotScheduled, AdminScheduledMeal
 from meals_gql.meal.types.types import MealItem

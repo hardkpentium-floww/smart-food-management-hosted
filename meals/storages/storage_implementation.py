@@ -336,7 +336,7 @@ class StorageImplementation(StorageInterface):
             user_meals = UserMealModel.objects.filter(meal_id=meal.id, meal__date__date=date.date())
 
             if not user_meals.exists():
-                raise UserMealDoesNotExist
+                return None
 
             for user_meal in user_meals:
                 meal_items = UserCustomMealItem.objects.filter(user_meal_id=user_meal.id)
