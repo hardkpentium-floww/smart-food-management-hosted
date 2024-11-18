@@ -217,6 +217,7 @@ class StorageImplementation(StorageInterface):
 
 
     def validate_quantities(self, quantities:[int]):
+        quantities = list(quantities)
         for i in range(len(quantities)):
             if quantities[i] < 0:
                 return False
@@ -255,7 +256,7 @@ class StorageImplementation(StorageInterface):
         return meal_dto
 
     def get_meal_status(self, meal_id:str):
-        user_meal= UserMeal.objects.filter(meal_id=meal_id)
+        user_meal= UserMeal.objects.get(meal_id=meal_id)
 
         return user_meal.meal_status
 
@@ -269,7 +270,7 @@ class StorageImplementation(StorageInterface):
 
 
     def get_meal_preference(self, meal_id:str, user_id:str, meal_type:str):
-        meal = UserMeal.objects.filter(user_id=user_id,meal_id=meal_id, meal_type=meal_type.value).first()
+        meal = UserMeal.objects.filter(user_id=user_id,meal_id=meal_id, meal_type=meal_type).first()
 
         return meal.meal_preference
 
@@ -295,8 +296,6 @@ class StorageImplementation(StorageInterface):
         from meals.models.user_meal import UserMeal
         from meals.models.user_custom_meal_item import UserCustomMealItem
 
-
-
         user_meal = UserMeal.objects.create(
             id=str(uuid.uuid4()),
             user_id=add_meal_dto.user_id,
@@ -319,7 +318,7 @@ class StorageImplementation(StorageInterface):
 
     def update_incampus_status(self, user_id: str, incampus_status: bool):
         from meals.models.user import User
-        User.objects.filter(id=user_id).update(incampus=incampus_status)
+        User.objects.filter(id=user_id).update(in_campus=incampus_status)
 
         return "success"
 
@@ -335,6 +334,7 @@ class StorageImplementation(StorageInterface):
         from meals_gql.meal.types.types import UserMeal
 
         meals = Meal.objects.filter(date__date=date.date())
+        user_meals_res = []
 
         for meal in meals:
             user_meals = UserMealModel.objects.filter(meal_id=meal.id, meal__date__date=date.date())
@@ -356,19 +356,17 @@ class StorageImplementation(StorageInterface):
                         custom_meal_quantity=meal_item.meal_qty
                     ))
 
-                user_meals = [
-                    UserMeal(
+                user_meals_res.append(UserMeal(
                         meal_type=meal.meal_type,
                         meal_id=meal.id,
                         meal_preference=user_meal.meal_preference,
                         items=items
-                    )
-                ]
+                    ))
 
 
         return UserScheduledMeal(
             date=date,
-            meals=user_meals
+            meals=user_meals_res
         )
 
 

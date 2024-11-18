@@ -1,7 +1,6 @@
 from django.db import models
 from ib_common.models import AbstractDateTimeModel
 
-# //remove admin
 class MealItem(AbstractDateTimeModel):
     id = models.CharField(primary_key=True, max_length=250)
     meal = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="meal_items")
